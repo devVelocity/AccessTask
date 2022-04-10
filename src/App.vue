@@ -191,8 +191,6 @@
           let encounters = await fetch('https://pokeapi.co/api/v2/pokemon/' + this.pokeSearched.toLowerCase() + "/encounters")
           this.pokemonEncounterOBJ = await encounters.json()
 
-          console.log(this.pokemonEncounterOBJ)
-
 
           this.pokemonFULLTITLE = this.pokemonOBJ.species.name
           this.pokemonTITLEFirst = this.pokemonOBJ.species.name.charAt(0).toUpperCase()
@@ -231,7 +229,6 @@
           let areaSearch = await fetch('https://pokeapi.co/api/v2/location-area/' + query.replace(" ","") + '/')
           this.areaSearchData = await areaSearch.json() 
         }catch(error){
-          console.log("Error")
           this.areadigit1 = ""
           this.areadigit2 = ""
           this.areadigit3 = ""
@@ -265,11 +262,9 @@
             this.$refs.areadigit3.disabled = true
             this.$refs.areadigit3.blur()
             this.getLocationInformation(this.areadigit1.toString()+this.areadigit2.toString()+this.areadigit3.toString())
-            console.log("done")
           }
           this.timesdigit++
         }
-        console.log(this.timesdigit)
       },
       changeAreaSpace(number){
         if(number == 1){
@@ -289,7 +284,6 @@
           this.$refs.areadigit3.disabled = true
           this.$refs.areadigit3.focus()
           this.getLocationInformation(this.areadigit1.toString()+this.areadigit2.toString()+this.areadigit3.toString())
-          console.log("done")
         }
       },
       clearAreaFields(){
