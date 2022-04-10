@@ -227,12 +227,23 @@
       },
       async getLocationInformation(query){
 
-        console.log(query)
-
-        let areaSearch = await fetch('https://pokeapi.co/api/v2/location-area/' + query.replace(" ","") + '/')
-        this.areaSearchData = await areaSearch.json()
-
-        console.log(this.areaSearchData)
+        try{
+          let areaSearch = await fetch('https://pokeapi.co/api/v2/location-area/' + query.replace(" ","") + '/')
+          this.areaSearchData = await areaSearch.json() 
+        }catch(error){
+          console.log("Error")
+          this.areadigit1 = ""
+          this.areadigit2 = ""
+          this.areadigit3 = ""
+          this.$refs.areadigit1.disabled = false
+          this.$refs.areadigit2.disabled = true
+          this.$refs.areadigit3.disabled = true
+          if(error.message = "JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
+            this.errorMessage = "Area not found"
+          }else{
+            this.errorMessage = error.message
+          }
+        }
 
       },
       changeAreaCodeFocus(number){
