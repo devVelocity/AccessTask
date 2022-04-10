@@ -4,7 +4,7 @@
         <div class="bg-red-800 pl-4 pr-4 pt-2 pb-2 rounded-md flex items-center justify-between w-auto h-auto flex-col">
             <h1 class="text-white"><span class="font-bold mr-2 inline-block">Error:</span>{{errorMSG}}</h1>
             <br>
-            <h2 class="text-white mt-4">Click outside of this box to close.</h2>
+            <h2 class="text-white mt-4">Click outside of this box or press the enter key to close.</h2>
         </div>
     </div>
 </template>
@@ -20,8 +20,17 @@ export default {
         }
     },
     mounted(){
-        console.log(this.errorMSG)
+        // console.log(this.errorMSG)
     },
+    created(){
+      window.addEventListener('keydown', (e) => {
+      if (e.key == 'Enter') {
+        if(this.errorMSG != ''){
+            this.$emit('clearError')
+        }
+      }
+    });
+    }
     // watch: { 
     //   	errorMSG: function(newVal, oldVal) { // watch it
     //       console.log('Prop changed: ', newVal, ' | was: ', oldVal)
