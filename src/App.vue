@@ -1,5 +1,5 @@
 <template>
-  <Error :errorMSG="errorMessage"/>
+  <Error :errorMSG="errorMessage" @clearError="this.errorMessage = '';"/>
   <Nav />
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <div class="w-full h-auto min-h-[400px] bg-yellow-500 bg-opacity-60 p-8 pl-16 pr-16 lg:pr-32 flex justify-between items-center gap-12 flex-col md:flex-row">
@@ -15,19 +15,41 @@
   <div class="pl-16 pr-16 mt-16">
     <h1 class="text-3xl font-semibold text-white text-left">Search for Pokemon</h1>
     <div class="flex mt-8 mb-8 w-full max-w-[1400px] md:flex-row flex-col">
-      <div class="w-full bg-red-700 h-auto min-h-[200px] mb-4 md:mb-16 rounded-lg rounded-br-none duration-100">
+      <div class="w-full bg-red-700 h-auto min-h-[200px] mb-4 md:mb-16 rounded-lg rounded-br-none duration-100 max-w-[500px]">
         <div class="bg-red-800 w-full h-auto min-h-[50px] pt-2 pb-4 rounded-tl-lg rounded-tr-lg" style="clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 85%, 68% 85%, 30% 85%, 0 100%, 0 0);">
           <h2 class="text-left text-white w-[90%] ml-[5%] font-semibold">Search Pokemon Name</h2>
-          <div class="w-[90%] ml-[5%] flex items-center justify-center md:gap-4 md:flex-row flex-col">
-            <input type="text" class="mt-2 text-left md:w-[70%] w-[90%] left-[5%] rounded-lg bg-neutral-800 p-2 text-white inline-block mb-4"/>
-            <button class="md:w-[50%] w-[90%] bg-neutral-700 text-white rounded-lg md:mb-4 mb-8 md:mt-2 p-2 duration-100 hover:bg-neutral-600">Search Pokemon</button>
+          <div class="w-[90%] ml-[5%] flex md:items-center justify-center md:gap-4 md:flex-row flex-col">
+            <input v-model="pokeSearched" type="text" class="mt-2 text-left md:w-[70%] w-[100%] left-[5%] rounded-lg bg-neutral-800 p-2 text-white inline-block mb-4"/>
+            <button class="md:w-[50%] w-[100%] bg-neutral-700 text-white rounded-lg md:mb-4 mb-8 md:mt-2 p-2 duration-100 hover:bg-neutral-600" @click="getDataPokemon()">Search Pokemon</button>
           </div>
         </div>
-        <div class="w-[80%] ml-[10%] mb-8 mt-8 rounded-lg min-h-[200px] h-auto bg-neutral-500 p-4">
-          <div class="bg-black w-full min-h-[200px] h-auto rounded-lg">
-            <h1 class="text-white pt-4 pb-4">rawr {{pokemonTITLE}}</h1>
-            <span class="bg-white bg-opacity-50 h-[1px] w-[90%] ml-[5%] block"></span>
-            <img :src="pokemonIMG" :alt="pokemonTITLE">
+        <div class="w-[80%] ml-[10%] mb-8 mt-8 rounded-lg min-h-[200px] h-auto bg-neutral-500 p-4 duration-500">
+          <div class="bg-black w-full min-h-[200px] h-auto rounded-lg duration-500">
+            <h1 class="text-white pt-4 pb-4 text-lg font-semibold" v-if="pokemonTITLE">{{pokemonTITLE}}</h1>
+            <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4" v-if="this.pokemonTITLE"></span>
+            <div v-if="!pokemonFemale">
+              <div class="flex justify-between">
+                <img :src="this.pokemonIMGOBJ.front" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.front" class="w-full">
+                <img :src="this.pokemonIMGOBJ.back" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.back" class="w-full">
+              </div>
+              <div class="flex justify-between mt-4">
+                <img :src="this.pokemonIMGOBJ.front_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.front_shiny" class="w-full">
+                <img :src="this.pokemonIMGOBJ.back_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.back_shiny" class="w-full">
+              </div>
+            </div>
+            <div v-if="pokemonFemale">
+              <div class="flex justify-between">
+                <img :src="this.pokemonIMGFemale.front" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.front" class="w-full">
+                <img :src="this.pokemonIMGFemale.back" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.back" class="w-full">
+              </div>
+              <div class="flex justify-between mt-4">
+                <img :src="this.pokemonIMGFemale.front_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.front_shiny" class="w-full">
+                <img :src="this.pokemonIMGFemale.back_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.back_shiny" class="w-full">
+              </div>
+            </div>
+            <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4 mt-4" v-if="this.pokemonTITLE"></span>
+            
+            <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4 mt-4" v-if="this.pokemonTITLE"></span>
           </div>
         </div>
         <div class="w-[90%] ml-[5%] h-auto min-h-[30px] mb-4">
@@ -35,28 +57,30 @@
 
       </div>
       <div class="w-full bg-red-700 h-auto min-h-[200px] mt-4 md:mt-16 pb-8 rounded-lg rounded-tl-none pt-32  duration-100" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 100%, 70% 100%, 30% 100%, 0 100%, 0 0);">
-        <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Description</h1>
-        <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-4">
-          <h1 class="text-white">{{pokemonDESC}}</h1>
-        </div>
-        <div class="flex w-[90%] ml-[5%] mt-4 gap-12">
-          <div class="w-full">
-            <h1 class="text-white text-left w-full mb-2 font-semibold">Height</h1>
-            <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
-              <h1 class="text-white">{{pokemonHEIGHT}}</h1>
-            </div>
-          </div>
-          <div class="w-full">
-            <h1 class="text-white text-left w-full mb-2 font-semibold">Weight</h1>
-            <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
-              <h1 class="text-white">{{pokemonWEIGHT}}</h1>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4">
-          <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Abilities</h1>
+        <div class="mr-24 max-w-[650px]">
+          <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Description</h1>
           <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-4">
             <h1 class="text-white">{{pokemonDESC}}</h1>
+          </div>
+          <div class="flex w-[90%] ml-[5%] mt-4 gap-12">
+            <div class="w-full">
+              <h1 class="text-white text-left w-full mb-2 font-semibold">Height</h1>
+              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
+                <h1 class="text-white">{{pokemonHEIGHT}}</h1>
+              </div>
+            </div>
+            <div class="w-full">
+              <h1 class="text-white text-left w-full mb-2 font-semibold">Weight</h1>
+              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
+                <h1 class="text-white">{{pokemonWEIGHT}}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Abilities</h1>
+            <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-4">
+              <h1 class="text-white">{{pokemonDESC}}</h1>
+            </div>
           </div>
         </div>
       </div>
@@ -72,10 +96,26 @@ export default {
   name: 'App',
   data(){
     return{
-      pokemonOBJ: null,
+      pokemonOBJ: {},
       errorMessage: "",
 
+      pokeSearched: null,
+
       pokemonDESC: null,
+      pokemonFULLTITLE: null,
+      pokemonTITLEFirst: null,
+      pokemonTITLE: null,
+      pokemonHEIGHT: null,
+      pokemonWEIGHT: null,
+
+      pokemonIMG: null,
+      pokemonIMGShiny: null,
+
+      pokemonIMGToggle: null,
+
+      pokemonIMGOBJ: {"front":null,"back":null,"front_shiny":null,"back_shiny":null},
+      pokemonFemale: false,
+      pokemonIMGFemale: {"front":null,"back":null,"front_shiny":null,"back_shiny":null}
     }
   },
   components: {
@@ -85,10 +125,29 @@ export default {
   methods:{
     async getDataPokemon(query){
       try{
-        let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + query)
+        let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + this.pokeSearched.toLowerCase())
         this.pokemonOBJ = await response.json()
-      }catch(error){
 
+        this.pokemonFULLTITLE = this.pokemonOBJ.species.name
+        this.pokemonTITLEFirst = this.pokemonOBJ.species.name.charAt(0).toUpperCase()
+        this.pokemonTITLE = this.pokemonTITLEFirst + this.pokemonFULLTITLE.slice(1)
+
+        this.pokemonIMGOBJ.front = this.pokemonOBJ.sprites.front_default
+        this.pokemonIMGOBJ.back = this.pokemonOBJ.sprites.back_default
+        this.pokemonIMGOBJ.front_shiny = this.pokemonOBJ.sprites.front_shiny
+        this.pokemonIMGOBJ.back_shiny = this.pokemonOBJ.sprites.back_shiny
+
+        this.pokemonIMGFemale.front = this.pokemonOBJ.sprites.front_female
+        this.pokemonIMGFemale.front = this.pokemonOBJ.sprites.back_female
+        this.pokemonIMGFemale.front_shiny = this.pokemonOBJ.sprites.front_female_shiny
+        this.pokemonIMGFemale.back_shiny = this.pokemonOBJ.sprites.back_female_shiny
+
+        this.pokeSearched = ""
+
+        console.log(this.pokemonOBJ)
+      }catch(error){
+        this.errorMessage = error.message
+        // console.log(this.errorMessage)
       }
     }
   }
