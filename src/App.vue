@@ -13,7 +13,7 @@
     </div>
     <div class="bg-yellow-500 bg-opacity-60 w-full h-[30px]" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
     <div class="flex items-center justify-center flex-col">
-      <div class="md:pl-16 md:pr-16 pl-4 pr-4 mt-16 mb-24 w-full max-w-[1500px]">
+      <div class="md:pl-16 md:pr-16 pl-4 pr-4 mt-16 mb-16 w-full max-w-[1500px]">
         <h1 class="text-3xl font-semibold text-white text-left">Search for Pokemon</h1>
         <div class="flex mt-8 mb-8 w-full max-w-[1400px] md:flex-row flex-col">
           <div class="w-full bg-red-700 h-auto min-h-[200px] mb-4 md:mb-16 rounded-lg rounded-br-none duration-100 max-w-[500px] border-r-red-800 border-r-2">
@@ -112,20 +112,21 @@
       </div>
     </div>
     <div class="w-full flex items-center justify-center">
-      <div class="md:pl-16 md:pr-16 pl-4 pr-4 mt-16 mb-24 w-full max-w-[1500px]">
+      <div class="md:pl-16 md:pr-16 pl-4 pr-4 mt-16 mb-16 w-full max-w-[1500px]">
         <h1 class="text-3xl font-semibold text-white text-left">Search an Area Code</h1>
-        <div class="bg-neutral-700 p-4 pl-8 pr-8 rounded-lg mt-8 flex gap-4 md:flex-row flex-col">
-          <div class="w-[30%]">
-            <h2 class="text-white text-left mb-4">Input an area code</h2>
+        <div class="bg-neutral-700 p-4 pl-8 pr-8 rounded-lg mt-8 flex gap-4 md:gap-12 md:flex-row flex-col items-center justify-center">
+          <div class="md:w-[40%] w-[100%] min-w-[100px]">
+      
+            <h2 class="text-white mb-4 text-xl font-regular text-center" v-if="!areaSearchData">Input an area code</h2>
             <div class="flex gap-2">
-              <input ref="areadigit1" v-model="areadigit1" @keyup="changeAreaCodeFocus(1)" @keyup.space="changeAreaSpace(1)" type="text" maxlength="1" class="rounded-md w-[40px] h-[50px] bg-neutral-900 text-center text-white"/>
-              <input ref="areadigit2" v-model="areadigit2" @keyup="changeAreaCodeFocus(2)" @keyup.space="changeAreaSpace(2)" type="text" maxlength="1" class="rounded-md w-[40px] h-[50px] bg-neutral-900 text-center text-white"/>
-              <input ref="areadigit3" v-model="areadigit3" @keyup="changeAreaCodeFocus(3)" @keyup.space="changeAreaSpace(3)" type="text" maxlength="1" class="rounded-md w-[40px] h-[50px] bg-neutral-900 text-center text-white"/>
+              <input ref="areadigit1" v-model="areadigit1" @keyup="changeAreaCodeFocus(1)" @keyup.space="changeAreaSpace(1)" type="text" maxlength="1" class="rounded-md w-full text-md h-[50px] bg-neutral-900 text-center text-white"/>
+              <input ref="areadigit2" v-model="areadigit2" @keyup="changeAreaCodeFocus(2)" @keyup.space="changeAreaSpace(2)" type="text" maxlength="1" class="rounded-md w-full text-md h-[50px] bg-neutral-900 text-center text-white"/>
+              <input ref="areadigit3" v-model="areadigit3" @keyup="changeAreaCodeFocus(3)" @keyup.space="changeAreaSpace(3)" type="text" maxlength="1" class="rounded-md w-full text-md h-[50px] bg-neutral-900 text-center text-white"/>
             </div>
-            <button @click="clearAreaFields()" class=""></button>
+            <button v-if="this.areaSearchData" @click="clearAreaFields()" class="bg-yellow-700 text-white rounded-lg pl-4 pr-4 p-2 mt-3 w-full duration-100 hover:bg-yellow-600">Clear Area Code</button>
           </div>
           <div class="w-full bg-neutral-800 bg-opacity-50 rounded-lg p-4" v-if="areaSearchData">
-            <h2 class="text-white text-left mb-2"><span class="font-bold mr-2">Area:</span> {{areaSearchData.location.name}}</h2>
+            <h2 class="text-white text-left mb-2"><span class="font-bold mr-2">Area:</span> {{areaSearchData.location.name}} <span>({{(this.areadigit1+this.areadigit2+this.areadigit3).replace(" ","")}})</span></h2>
             <span class="h-[1px] w-full bg-white inline-block bg-opacity-50 rounded-lg mb-2"></span>
             <h2 class="text-white text-left mb-2 font-bold">Pokemon Encounters</h2>
             <div class="flex flex-wrap">
@@ -134,12 +135,13 @@
           </div>
         </div>
       </div>
-
     </div>
+    <Footer/>
   </template>
 
   <script>
   import Nav from './components/Nav.vue'
+  import Footer from './components/Footer.vue'
   import Error from './components/Error.vue'
 
   export default {
@@ -178,6 +180,7 @@
     components: {
       Nav,
       Error,
+      Footer,
     },
     methods:{
       async getDataPokemon(query){
@@ -276,6 +279,18 @@
           this.$refs.areadigit3.focus()
           this.getLocationInformation(this.areadigit1.toString()+this.areadigit2.toString()+this.areadigit3.toString())
           console.log("done")
+        }
+      },
+      clearAreaFields(){
+        this.areaSearchData = null; 
+        this.areadigit1 = ''; 
+        this.areadigit2 = ''; 
+        this.areadigit3 = ''; 
+        this.$refs.areadigit1.disabled = false
+      },
+      getDownEnter(){
+        if(this.errorMessage == ""){
+          this.getDataPokemon()
         }
       }
     },
