@@ -12,10 +12,10 @@
     </div>
   </div>
   <div class="bg-yellow-500 bg-opacity-60 w-full h-[30px]" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
-  <div class="pl-16 pr-16 mt-16">
+  <div class="md:pl-16 md:pr-16 pl-4 pr-4 mt-16 mb-24">
     <h1 class="text-3xl font-semibold text-white text-left">Search for Pokemon</h1>
     <div class="flex mt-8 mb-8 w-full max-w-[1400px] md:flex-row flex-col">
-      <div class="w-full bg-red-700 h-auto min-h-[200px] mb-4 md:mb-16 rounded-lg rounded-br-none duration-100 max-w-[500px]">
+      <div class="w-full bg-red-700 h-auto min-h-[200px] mb-4 md:mb-16 rounded-lg rounded-br-none duration-100 max-w-[500px] border-r-red-800 border-r-2">
         <div class="bg-red-800 w-full h-auto min-h-[50px] pt-2 pb-4 rounded-tl-lg rounded-tr-lg" style="clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 85%, 68% 85%, 30% 85%, 0 100%, 0 0);">
           <h2 class="text-left text-white w-[90%] ml-[5%] font-semibold">Search Pokemon Name</h2>
           <div class="w-[90%] ml-[5%] flex md:items-center justify-center md:gap-4 md:flex-row flex-col">
@@ -25,9 +25,9 @@
         </div>
         <div class="w-[80%] ml-[10%] mb-8 mt-8 rounded-lg min-h-[200px] h-auto bg-neutral-500 p-4 duration-500">
           <div class="bg-black w-full min-h-[200px] h-auto rounded-lg duration-500">
-            <h1 class="text-white pt-4 pb-4 text-lg font-semibold" v-if="pokemonTITLE">{{pokemonTITLE}}</h1>
+            <h1 class="text-white pt-4 pb-4 text-lg font-semibold" style="font-family: 'Press Start 2P', cursive;" v-if="pokemonTITLE">{{pokemonTITLE}}</h1>
             <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4" v-if="this.pokemonTITLE"></span>
-            <div v-if="!pokemonFemale">
+            <div>
               <div class="flex justify-between">
                 <img :src="this.pokemonIMGOBJ.front" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.front" class="w-full">
                 <img :src="this.pokemonIMGOBJ.back" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.back" class="w-full">
@@ -37,18 +37,6 @@
                 <img :src="this.pokemonIMGOBJ.back_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGOBJ.back_shiny" class="w-full">
               </div>
             </div>
-            <div v-if="pokemonFemale">
-              <div class="flex justify-between">
-                <img :src="this.pokemonIMGFemale.front" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.front" class="w-full">
-                <img :src="this.pokemonIMGFemale.back" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.back" class="w-full">
-              </div>
-              <div class="flex justify-between mt-4">
-                <img :src="this.pokemonIMGFemale.front_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.front_shiny" class="w-full">
-                <img :src="this.pokemonIMGFemale.back_shiny" :alt="pokemonTITLE" v-if="this.pokemonIMGFemale.back_shiny" class="w-full">
-              </div>
-            </div>
-            <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4 mt-4" v-if="this.pokemonTITLE"></span>
-            
             <span class="bg-white bg-opacity-50 h-[1px] w-[90%] inline-block mb-4 mt-4" v-if="this.pokemonTITLE"></span>
           </div>
         </div>
@@ -57,29 +45,46 @@
 
       </div>
       <div class="w-full bg-red-700 h-auto min-h-[200px] mt-4 md:mt-16 pb-8 rounded-lg rounded-tl-none pt-32  duration-100" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 100%, 70% 100%, 30% 100%, 0 100%, 0 0);">
-        <div class="mr-24 max-w-[650px]">
-          <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Description</h1>
+        <div class="mr-24 w-[70%] md:w-[85%] md:max-w-[650px] mb-8">
+          <!-- <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Description</h1>
           <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-4">
             <h1 class="text-white">{{pokemonDESC}}</h1>
-          </div>
-          <div class="flex w-[90%] ml-[5%] mt-4 gap-12">
+          </div> -->
+          <div class="flex w-[90%] ml-[5%] mt-2 gap-4">
             <div class="w-full">
               <h1 class="text-white text-left w-full mb-2 font-semibold">Height</h1>
-              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
+              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
                 <h1 class="text-white">{{pokemonHEIGHT}}</h1>
               </div>
             </div>
             <div class="w-full">
               <h1 class="text-white text-left w-full mb-2 font-semibold">Weight</h1>
-              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-4">
+              <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
                 <h1 class="text-white">{{pokemonWEIGHT}}</h1>
+              </div>
+            </div>
+            
+          </div>
+          <div class="mt-4">
+            <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Base Experience</h1>
+            <div class="bg-black w-[44%] ml-[5%] rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
+                <h1 class="text-white text-sm text-center">{{this.pokemonOBJ.base_experience}}</h1>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Stats</h1>
+            <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
+              <div v-for="item in this.pokemonOBJ.stats">
+                <h1 class="text-neutral-500 text-sm text-left">{{item.stat.name}}: <span class="ml-1 text-white">{{item.base_stat}}</span></h1>
               </div>
             </div>
           </div>
           <div class="mt-4">
-            <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Abilities</h1>
-            <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-4">
-              <h1 class="text-white">{{pokemonDESC}}</h1>
+            <h1 class="text-white text-left w-[90%] ml-[5%] mb-2 font-semibold">Pokemon Types</h1>
+            <div class="bg-black w-[90%] ml-[5%] rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
+              <div v-for="item in this.pokemonOBJ.types">
+                <h1 class="text-neutral-500 text-sm text-left">{{item.type.name}}</h1>
+              </div>
             </div>
           </div>
         </div>
@@ -114,8 +119,6 @@ export default {
       pokemonIMGToggle: null,
 
       pokemonIMGOBJ: {"front":null,"back":null,"front_shiny":null,"back_shiny":null},
-      pokemonFemale: false,
-      pokemonIMGFemale: {"front":null,"back":null,"front_shiny":null,"back_shiny":null}
     }
   },
   components: {
@@ -137,16 +140,25 @@ export default {
         this.pokemonIMGOBJ.front_shiny = this.pokemonOBJ.sprites.front_shiny
         this.pokemonIMGOBJ.back_shiny = this.pokemonOBJ.sprites.back_shiny
 
-        this.pokemonIMGFemale.front = this.pokemonOBJ.sprites.front_female
-        this.pokemonIMGFemale.front = this.pokemonOBJ.sprites.back_female
-        this.pokemonIMGFemale.front_shiny = this.pokemonOBJ.sprites.front_female_shiny
-        this.pokemonIMGFemale.back_shiny = this.pokemonOBJ.sprites.back_female_shiny
+        this.pokemonHEIGHT = this.pokemonOBJ.height
+        this.pokemonWEIGHT = this.pokemonOBJ.weight
+        
+        // this.pokemonDESC = this.pokemonOBJ.
 
         this.pokeSearched = ""
 
         console.log(this.pokemonOBJ)
       }catch(error){
-        this.errorMessage = error.message
+        this.pokemonOBJ = {}
+        this.pokemonIMGOBJ = {}
+        this.pokemonTITLE = ""
+        this.pokemonHEIGHT = ""
+        this.pokemonWEIGHT = ""
+        if(error.message = "JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
+          this.errorMessage = "Pokemon not found"
+        }else{
+          this.errorMessage = error.message
+        }
         // console.log(this.errorMessage)
       }
     }
