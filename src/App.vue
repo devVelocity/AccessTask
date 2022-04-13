@@ -5,7 +5,7 @@
     <div class="w-full h-auto min-h-[400px] bg-yellow-500 bg-opacity-60 p-8 pl-16 pr-16 lg:pr-32 flex justify-between items-center gap-12 flex-col md:flex-row">
       <div class="flex justify-center flex-col w-full">
         <h1 class="text-white text-center text-2xl md:text-3xl font-semibold md:text-left">Leveraging the PokeAPI</h1>
-        <h2 class="text-white text-center text-lg md:text- font-light md:text-left mt-4">Get information about Pokemon and Technical Machines easily</h2>
+        <h2 class="text-white text-center text-lg md:text- font-light md:text-left mt-4">Get information about Pokemon and Area Codes easily</h2>
       </div>
       <div class="w-full flex md:justify-end justify-center items-center">
         <img src="./assets/images/pokeball.png" class="motion-safe:animate-spin-slow text-opacity0">
