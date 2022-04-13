@@ -97,15 +97,15 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="flex mt-4 w-[90%] ml-[5%] gap-4">
                 <div class="w-full" v-if="this.pokemonEncounterOBJ.length != 0">
                   <h1 class="text-white text-left w-full mb-2 font-semibold">Pokemon Encounter Area(s) Codes</h1>
-                  <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
-                    <div class="flex items-start justify-start">
-                      <h1 v-for="item in this.pokemonEncounterOBJ" class="text-neutral-500 text-sm text-left inline-block">{{item.location_area.url.replace("https://pokeapi.co/api/v2/location-area/","").replace("/","")}}, </h1>
+                    <div class="bg-black w-full rounded-lg h-auto min-h-[30px] p-2 " style="font-family: 'Press Start 2P', cursive;">
+                        <h1 v-for="item in this.pokemonEncounterOBJ" class="text-neutral-500 text-sm text-left inline-block">{{item.location_area.url.replace("https://pokeapi.co/api/v2/location-area/","").replace("/","")}}, </h1>
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -215,6 +215,8 @@
           this.pokemonTITLE = ""
           this.pokemonHEIGHT = ""
           this.pokemonWEIGHT = ""
+          this.pokemonEncounterOBJ =  {}
+          this.areaSearcData = {}
           if(error.message = "JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
             this.errorMessage = "Pokemon not found"
           }else{
