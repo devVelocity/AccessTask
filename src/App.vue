@@ -215,6 +215,8 @@
           this.pokemonTITLE = ""
           this.pokemonHEIGHT = ""
           this.pokemonWEIGHT = ""
+          this.pokemonEncounterOBJ =  {}
+          this.areaSearcData = {}
           if(error.message = "JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
             this.errorMessage = "Pokemon not found"
           }else{
