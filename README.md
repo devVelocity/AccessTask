@@ -1,4 +1,4 @@
-# accessfrontend
+# PokeAPI
 
 ## Project setup
 ```
